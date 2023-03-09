@@ -32,6 +32,8 @@ let addAnswer = () => {
     alert('fullfill the answers')
   } else {
     answers.push(answer.value)
+    localStorage.setItem("questions", JSON.stringify(questions));
+
     let answersList = document.getElementById("answersList")
     answersList.innerHTML += `<li>${answer.value}</li>`
     answer.value = ''
@@ -51,18 +53,17 @@ function displayQuestions() {
 
     if (question.answers.length === 0) {
       let questionDiv = document.createElement("div");
-      questionDiv.innerHTML = `${question.text} <button onclick="addAnswer(${i})">Add answers</button>`;
+      questionDiv.innerHTML = `${question.questionText} <button onclick="addAnswer(${i})">Add answers</button>`;
       unansweredDiv.appendChild(questionDiv);
     } else {
       let questionDiv = document.createElement("div");
-      questionDiv.innerHTML = `${question.text}`;
+      questionDiv.innerHTML = `${question.questionText}`;
       answeredDiv.appendChild(questionDiv);
     }
   }
 }
 function loadQuestionsFromStorage() {
   const storedQuestions = JSON.parse(localStorage.getItem("questions"));
-
   if (storedQuestions) {
     questions = storedQuestions;
     displayQuestions();
@@ -77,6 +78,7 @@ window.onload = function () {
   questionList.appendChild(unanswered)
   questionList.appendChild(answered)
   console.log("The web page has finished loading!");
+  loadQuestionsFromStorage();
 }
 
 
