@@ -1,1 +1,1 @@
-# qa-app
+# open index.html
